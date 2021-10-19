@@ -27,10 +27,9 @@ class WordGuesserApp < Sinatra::Base
   
   post '/create' do
     # NOTE: don't change next line - it's needed by autograder!
-    word = params[:word] || WordGuesserGame.get_random_word
+    word = params[:word] || WordGuesserGame.get_random_word #游戏开始时选定的单词
     # NOTE: don't change previous line - it's needed by autograder!
-
-    @game = WordGuesserGame.new(word)
+    @game = WordGuesserGame.new(word)#根据初始的单词创建游戏
     redirect '/show'
   end
   
@@ -38,7 +37,21 @@ class WordGuesserApp < Sinatra::Base
   # If a guess is repeated, set flash[:message] to "You have already used that letter."
   # If a guess is invalid, set flash[:message] to "Invalid guess."
   post '/guess' do
-    letter = params[:guess].to_s[0]
+    letter = params[:guess].to_s #获取用户输入的字母
+    if letter>'z'||letter<'a'
+      flash[:message]="Invalid guess."
+    end
+    @game.guess(letter) #进行猜测
+    #判断状态
+    if @game.check_win_or_lose==:win
+      redirect "/win"
+    elsif @game.check_win_or_lose==:lose
+      redirect "/lose"
+    else
+      if @game.repeated
+        flash[:message]="You have already used that letter."
+      end
+    end
     ### YOUR CODE HERE ###
     redirect '/show'
   end
@@ -62,5 +75,4 @@ class WordGuesserApp < Sinatra::Base
     ### YOUR CODE HERE ###
     erb :lose # You may change/remove this line
   end
-  
 end
