@@ -11,6 +11,7 @@ class WordGuesserGame
   attr_accessor:word_with_guesses
   attr_accessor:check_win_or_lose
   attr_accessor:repeated
+  attr_accessor:valid
 
 
 
@@ -21,6 +22,7 @@ class WordGuesserGame
     @word_with_guesses='-'*word.to_s.length
     @check_win_or_lose= :play
     @repeated=false
+    @valid=true
   end
 
 
@@ -39,20 +41,23 @@ class WordGuesserGame
 
   def guess(ch)
     if ch==''
+      @valid=false
       raise ArgumentError 
     end
     ch=ch.to_s.downcase
     if ch<'a'||ch>'z'
+      @valid=false
       raise ArgumentError 
     end
     if !ch
+      @valid=false
       raise ArgumentError 
     end
     if @word.to_s.index(ch)
       if !@guesses.index(ch)
         @guesses=@guesses.to_s+ch.to_s
       else
-        repeated=true
+        @repeated=true
         return false#重复正确猜测
       end
     else

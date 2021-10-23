@@ -38,8 +38,9 @@ class WordGuesserApp < Sinatra::Base
   # If a guess is invalid, set flash[:message] to "Invalid guess."
   post '/guess' do
     letter = params[:guess].to_s #获取用户输入的字母
-    if letter>'z'||letter<'a'
+    if letter<'a'||letter>'z'
       flash[:message]="Invalid guess."
+      redirect "/show"
     end
     @game.guess(letter) #进行猜测
     #判断状态
@@ -67,11 +68,17 @@ class WordGuesserApp < Sinatra::Base
   end
   
   get '/win' do
+    if @game.check_win_or_lose==:play
+      redirect "/show"
+    end
     ### YOUR CODE HERE ###
     erb :win # You may change/remove this line
   end
   
   get '/lose' do
+    if @game.check_win_or_lose==:play
+      redirect "/show"
+    end
     ### YOUR CODE HERE ###
     erb :lose # You may change/remove this line
   end
