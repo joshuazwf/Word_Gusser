@@ -29,7 +29,7 @@ class WordGuesserApp < Sinatra::Base
     # NOTE: don't change next line - it's needed by autograder!
     word = params[:word] || WordGuesserGame.get_random_word #游戏开始时选定的单词
     # NOTE: don't change previous line - it's needed by autograder!
-    @game = WordGuesserGame.new(word)#根据初始的单词创建游戏
+    @game = WordGuesserGame.new(word)#根据初始的单词创建游戏  
     redirect '/show'
   end
   

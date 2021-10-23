@@ -90,7 +90,7 @@ describe WordGuesserGame do
     before :each do
       @game = WordGuesserGame.new('banana')
     end
-    # for a given set of guesses, what should the word look like?
+    
     @test_cases = {
       'bn' =>  'b-n-n-',
       'def' => '------',

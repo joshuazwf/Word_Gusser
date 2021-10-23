@@ -62,7 +62,7 @@ class WordGuesserGame
       end
     else
       if !@wrong_guesses.index(ch)
-        @wrong_guesses=@wrong_guesses.to_s+ch.to_s
+        @wrong_guesses=@wrong_guesses.to_s+ch.to_s#错误猜测序列
       else
         @repeated=true
         return false#重复错误猜测
